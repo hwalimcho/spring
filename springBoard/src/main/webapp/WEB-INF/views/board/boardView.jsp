@@ -8,6 +8,36 @@
 <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <title>boardView</title>
 </head>
+<script type="text/javascript">
+
+	$j(document).ready(function(){
+		
+		$j("#delete").on("click",function(){
+			var $frm = $j('.boardView :input');
+			var param = $frm.serialize();
+			
+			$j.ajax({
+			    url : "/board/${board.boardType}/${board.boardNum}/boardDelete.do",
+			    dataType: "json",
+			    type: "GET",
+			    data : param,
+			    success: function(data, textStatus, jqXHR)
+			    {
+					//alert("삭제완료");
+					
+					alert("메세지:"+data.success);
+					
+					location.href = "/board/boardList.do";
+			    },
+			    error: function (jqXHR, textStatus, errorThrown)
+			    {
+			    	alert("실패");
+			    }
+			});
+		});
+	});
+	
+</script>
 <body>
 <table align="center">
 	<tr>
@@ -43,7 +73,8 @@
 		<td align="right">
 			<a href="/board/boardList.do">List</a>
 			<a href = "/board/${board.boardType}/${board.boardNum}/boardUpdate.do?pageNo=${pageNo}">update</a>
-			<a href = "/board/${board.boardType}/${board.boardNum}/boardDelete.do?pageNo=${pageNo}">delete</a>
+			<input id="delete" type="button" value="delete">
+		
 		</td>
 		
 	</tr>

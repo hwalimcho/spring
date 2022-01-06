@@ -37,6 +37,7 @@
 		
 			var addTable = '<tr name=trTitle>'+
 	        	'<td width="120" align="center">'+
+	        	'<input id="check" type="checkbox">'+
 	         		'Title'+
 	         	'</td>'+
 	         	'<td width="400">'+
@@ -53,9 +54,27 @@
 	      	'</tr>';
 	      	
 	      	$j("#addRow").on("click",function(){
+	      		
 	      		var trHtml = $j( "tr[name=comment]:last" );
 	      		trHtml.after(addTable);
-		});
+			});
+	      	
+	      	/*
+		    $j("#delRow").on("click", function(){
+		      	  
+		      	//if()
+		      	//var trHtml_title = $j("tr[name=title]");
+		   		//var trHtml = $j("tr[name=comment]");
+		   		//$j("tr[name=title]").remove();
+	      		//$j("tr[name=comment]:last").remove();
+	      		//var trHtml = $j("tr[name=comment]");
+	          	//trHtml.remove();
+	          	$j("#tr:checked").parent().remove();
+		          	
+		          	
+		      	});
+	      	*/
+	      	
 	});
 
 </script>
@@ -73,8 +92,9 @@
 			<td>
 			
 				<table border ="1"> 
-					<tr>
+					<tr name="title">
 						<td width="120" align="center">
+						<input id="check" type="checkbox" >
 						Title
 						</td>
 						<td width="400">

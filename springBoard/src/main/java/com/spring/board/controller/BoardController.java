@@ -102,9 +102,7 @@ public class BoardController {
 			int resultCnt = boardService.boardInsert(b);
 			total += resultCnt;
 		} 
-		
-				
-				
+
 		result.put("success", (total == listCnt)?"Y":"N");
 		String callbackMsg = commonUtil.getJsonCallBackString(" ",result);
 		
@@ -131,7 +129,7 @@ public class BoardController {
 		model.addAttribute("board", boardVo);
 		
 		return "board/boardUpdate";
-}
+	}
 	
 	@RequestMapping(value = "/board/boardUpdateAction.do", method = RequestMethod.POST)
 	@ResponseBody
@@ -149,24 +147,46 @@ public class BoardController {
 		
 		return callbackMsg;
 	}
+
 	
 	
 	@RequestMapping(value = "/board/{boardType}/{boardNum}/boardDelete.do", method = RequestMethod.GET)
-	public String boardDelete(Locale locale, Model model
+	@ResponseBody
+	public String boardDelete(Locale locale, BoardVo boardVo
 			,@PathVariable("boardType")String boardType
-			,@PathVariable("boardNum")int boardNum) throws Exception{
+			,@PathVariable("boardNum")int boardNum) 
+			throws Exception{
 		
-		BoardVo boardVo = new BoardVo();
-	
-		boardVo = boardService.selectBoard(boardType,boardNum);
-		boardService.boardDelete(boardVo);
+			HashMap<String, String> result = new HashMap<String, String>();
+			CommonUtil commonUtil = new CommonUtil();
 		
-		return "redirect:/board/boardList.do";
+			//BoardVo boardVo = new BoardVo();
+		
+			//boardVo = boardService.selectBoard(boardType,boardNum);
+			//boardService.boardDelete(boardVo);
+			
+			//À§¿¡°É ¹ØÀ¸·Î ¹Ù²Þ
+			
+			int resultCnt = boardService.boardDelete(boardVo);
+			
+			result.put("success", (resultCnt > 0)?"it's successfully deleted.":"It's already deleted.");
+			
+			String callbackMsg = commonUtil.getJsonCallBackString(" ",result);
+			
+			System.out.println("callbackMsg::"+callbackMsg);
+			
+			
+			return callbackMsg;
+			
+			//return "redirect:/board/boardList.do";
 		
 	}
 
-	
+
 }
+
+	
+
 
 
 
