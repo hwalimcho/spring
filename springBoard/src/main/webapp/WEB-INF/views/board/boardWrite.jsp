@@ -37,7 +37,7 @@
 		
 			var addTable = '<tr name=trTitle>'+
 	        	'<td width="120" align="center">'+
-	        	'<input id="check" type="checkbox">'+
+	        	'<input name="checkRow" type="checkbox">'+
 	         		'Title'+
 	         	'</td>'+
 	         	'<td width="400">'+
@@ -53,30 +53,51 @@
 	         	'</td>'+
 	      	'</tr>';
 	      	
+	      	
+	      	
 	      	$j("#addRow").on("click",function(){
 	      		
 	      		var trHtml = $j( "tr[name=comment]:last" );
 	      		trHtml.after(addTable);
 			});
-	      	
-	      	/*
-		    $j("#delRow").on("click", function(){
-		      	  
-		      	//if()
-		      	//var trHtml_title = $j("tr[name=title]");
-		   		//var trHtml = $j("tr[name=comment]");
-		   		//$j("tr[name=title]").remove();
-	      		//$j("tr[name=comment]:last").remove();
-	      		//var trHtml = $j("tr[name=comment]");
-	          	//trHtml.remove();
-	          	$j("#tr:checked").parent().remove();
-		          	
-		          	
-		      	});
-	      	*/
-	      	
-	});
 
+		    $j("#delRow").on("click", function(){
+		      	  /*
+		    	 if($j('input').is(":checked")== true){ //체크된 요소가 있으면               
+	                    //$j("input:checkbox[name='checkRow']:checked").parent().parent().remove();
+	                   // var e = i.next("tr");                     
+	                   // i.remove();
+	                    //e.remove();
+	                   // console.log('체크된 상태');
+	                  	//var trHtml1 = $j(".tr[name=comment]").next();
+	                  	//var trHtml2 = $j("tr[name=title]").next();
+	    	          	//trHtml1.remove();
+	    	          	//trHtml2.remove();
+	    	          	
+	               }else {
+	                   alert*"삭제할 항목을 선택해주세요!");*/
+
+	                if($j("input:checkBox[name='checkRow']:checked").length == 0) {
+	                	alert("삭제할 항목을 선택하세요.");
+	                	return;
+	                }
+	                $j("input:checkbox[name='checkRow']:checked").each(function(k,kVal){
+	                	
+	               		console.log("kVal ::", kVal.parentElement.parentElement);
+	               		console.log("kVal ::", kVal.parentElement.parentElement.nextElementSibling);
+	                	let a = kVal.parentElement.parentElement;
+	                	let b = kVal.parentElement.parentElement.nextElementSibling;
+	                	$j(a).remove();
+	                	$j(b).remove();
+	                });
+		          	
+	            
+	                
+	                
+	                
+		      	});
+	});
+	      	
 </script>
 <body>
 <form class="boardWrite">
@@ -91,10 +112,10 @@
 		<tr>
 			<td>
 			
-				<table border ="1"> 
+				<table border ="1">
 					<tr name="title">
 						<td width="120" align="center">
-						<input id="check" type="checkbox" >
+							<input name="checkRow" type="checkbox">
 						Title
 						</td>
 						<td width="400">
