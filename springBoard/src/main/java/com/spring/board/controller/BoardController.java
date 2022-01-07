@@ -169,7 +169,7 @@ public class BoardController {
 			
 			int resultCnt = boardService.boardDelete(boardVo);
 			
-			result.put("success", (resultCnt > 0)?"it's successfully deleted.":"It's already deleted.");
+			result.put("success", (resultCnt > 0)?"It's successfully deleted.":"It's already deleted.");
 			
 			String callbackMsg = commonUtil.getJsonCallBackString(" ",result);
 			

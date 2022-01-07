@@ -15,6 +15,23 @@
 			var $frm = $j('.boardWrite :input');
 			var param = $frm.serialize();
 			
+			console.log(param);
+			
+			var paramlist = new Array();
+			paramlist = param.split("&");
+			paramlen = paramlist.length;
+			for (var i=0; i<paramlen; i++) {
+				if(paramlist[i]=="boardTitle=" || paramlist[i]=="boardComment=") {
+					alert("빈칸 없이 작성해주세요.")
+					return false;
+				}
+				
+			}
+		
+			
+			
+			
+			
 			$j.ajax({
 			    url : "/board/boardWriteAction.do",
 			    dataType: "json",
@@ -53,42 +70,34 @@
 	         	'</td>'+
 	      	'</tr>';
 	      	
-	      	
-	      	
+	      	var count=1 ;
 	      	$j("#addRow").on("click",function(){
 	      		
 	      		var trHtml = $j( "tr[name=comment]:last" );
 	      		trHtml.after(addTable);
+	      		++count ;
+	      		//console.log(count);
 			});
 
 		    $j("#delRow").on("click", function(){
-		      	  /*
-		    	 if($j('input').is(":checked")== true){ //체크된 요소가 있으면               
-	                    //$j("input:checkbox[name='checkRow']:checked").parent().parent().remove();
-	                   // var e = i.next("tr");                     
-	                   // i.remove();
-	                    //e.remove();
-	                   // console.log('체크된 상태');
-	                  	//var trHtml1 = $j(".tr[name=comment]").next();
-	                  	//var trHtml2 = $j("tr[name=title]").next();
-	    	          	//trHtml1.remove();
-	    	          	//trHtml2.remove();
-	    	          	
-	               }else {
-	                   alert*"삭제할 항목을 선택해주세요!");*/
-
 	                if($j("input:checkBox[name='checkRow']:checked").length == 0) {
 	                	alert("삭제할 항목을 선택하세요.");
 	                	return;
 	                }
+	                if(count<=1){
+	                	alert("더 이상 삭제할 수 없습니다.");
+	                	return;	
+	                }
 	                $j("input:checkbox[name='checkRow']:checked").each(function(k,kVal){
 	                	
-	               		console.log("kVal ::", kVal.parentElement.parentElement);
-	               		console.log("kVal ::", kVal.parentElement.parentElement.nextElementSibling);
+	               		//console.log("kVal ::", kVal.parentElement.parentElement);
+	               		//console.log("kVal ::", kVal.parentElement.parentElement.nextElementSibling);
 	                	let a = kVal.parentElement.parentElement;
 	                	let b = kVal.parentElement.parentElement.nextElementSibling;
 	                	$j(a).remove();
 	                	$j(b).remove();
+	                	count--;
+	               
 	                });
 		          	
 	            
