@@ -64,17 +64,6 @@ public class BoardVo {
 	public void setModifier(String modifier) {
 		this.modifier = modifier;
 	}
-	/*
-	public List<BoardVo> getBoardVoTitleList(){
-		return boardVoTitleList;
-	}
-	public void setBoardVoTitleList(List<BoardVo> boardVoTitleList) {
-		this.boardVoTitleList = boardVoTitleList;
-	}
-	public List<BoardVo> getBoardVoCommentList(){
-		return boardVoCommentList;
-	}
-	public void setBoardVoCommentList(List<BoardVo> boardVoCommentList) {
-		this.boardVoCommentList = boardVoCommentList;
-	}*/
+	
+
 }

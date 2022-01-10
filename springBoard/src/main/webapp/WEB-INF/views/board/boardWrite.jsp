@@ -65,21 +65,23 @@
 	         	'<td width="400">'+
 	         		'<input name="boardVoList['+count+'].boardTitle" type="text" size="50" value="${board.boardTitle}">'+ 
 	         	'</td>'+
-	      	'</tr>'   +
-	      	'<tr name="comment">'+
-	         	'<td height="300" align="center">'+
+	      		'</tr>'   +
+	      		'<tr name="comment">'+
+	     	    	'<td height="300" align="center">'+
 	         		'Comment'+
-	         	'</td>'+
-	         	'<td valign="top">'+
+	         		'</td>'+
+	         		'<td valign="top">'+
 	         		'<textarea name="boardVoList['+count+'].boardComment"  rows="20" cols="55" value="${board.boardComment}"/>'+
-	         	'</td>'+
-	      	'</tr>';
+	         		'</td>'+
+	      		'</tr>';
 	      		      		
 	      		var trHtml = $j( "tr[name=comment]:last" );
 	      		trHtml.after(addTable);
-	      		++count ;
+	      		
 	      		console.log(count);
 	      		console.log("addTable:", addTable);
+	      		count++ ;
+	      		
 			});
 	      	
 	      	
@@ -94,24 +96,24 @@
 	                	alert("더 이상 삭제할 수 없습니다.");
 	                	return;	
 	                }
+	                
 	                $j("input:checkbox[name='checkRow']:checked").each(function(k,kVal){
 	                	
+			      	
 	                	//어느 테이블이 삭제되는 지 확인해주는 함수
 	               		//console.log("kVal ::", kVal.parentElement.parentElement);
 	               		//console.log("kVal ::", kVal.parentElement.parentElement.nextElementSibling);
 	                	let a = kVal.parentElement.parentElement;
 	                	let b = kVal.parentElement.parentElement.nextElementSibling;
+	                	
 	                	$j(a).remove();
 	                	$j(b).remove();
-	                	count--;
+	                	--count;
 	                	console.log(count);
-	               
+	                	//console.log("delTable:", delTable);
+	                	
 	                });
-		          	
-	            
-	                
-	                
-	                
+   
 		      	});
 	});
 	      	
@@ -132,13 +134,25 @@
 			<td>
 			
 				<table border ="1">
+					<tr name="code">
+						<td width="120" align="center">
+						Type
+						</td>
+						<td>
+						<select name="codeType">
+							<c:forEach items="${codeList}" var="list">
+							<option value="${list.codeID}">${list.codeName}</option>
+							</c:forEach>
+							
+						</select>
+						</td>
+						
+					</tr>
 					<tr name="title">
 						<td width="120" align="center">
-						<input name="checkRow" type="checkbox">
 						Title
 						</td>
 						<td width="400">
-						<!-- <input name="title" type="text" size="50" value="${board.boardTitle}">  -->
 						 <input name="boardVoList[0].boardTitle" type="text" size="50" value="${board.boardTitle}"  maxlength="24">
 						</td>
 						
@@ -148,8 +162,7 @@
 						Comment
 						</td>
 						<td valign="top">
-						<!-- <textarea name="comment"  rows="20" cols="55" value="${board.boardComment}"> </textarea>-->
-						<textarea name="boardVoList[0].boardComment"rows="20" cols="55" value="${board.boardComment}"></textarea>
+						<textarea name="boardVoList[0].boardComment"rows="20" cols="55">${board.boardComment}</textarea>
 					</tr>
 					<tr>
 						<td align="center">

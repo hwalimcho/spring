@@ -24,6 +24,7 @@ import com.spring.board.HomeController;
 import com.spring.board.service.boardService;
 import com.spring.board.vo.BoardVo;
 import com.spring.board.vo.PageVo;
+import com.spring.board.vo.CodeVo;
 import com.spring.common.CommonUtil;
 
 @Controller
@@ -76,8 +77,12 @@ public class BoardController {
 	@RequestMapping(value = "/board/boardWrite.do", method = RequestMethod.GET)
 	public String boardWrite(Locale locale, Model model) throws Exception{
 		
+		List<CodeVo> codeList = new ArrayList<CodeVo>();
 		
+		codeList = boardService.selectCodeList();
 		
+		model.addAttribute("codeList", codeList);
+
 		return "board/boardWrite";
 	}
 	
@@ -92,15 +97,11 @@ public class BoardController {
 		int resultCnt = 0;
 		//System.out.printf("listCnt : ", boardVo.getBoardVoList().size());
 
-		for(int i=0; i<listCnt; i++ ) {
-
-		BoardVo b = new BoardVo();
-		b.setBoardTitle(boardVo.getBoardVoList().get(i).getBoardTitle());
-		b.setBoardComment(boardVo.getBoardVoList().get(i).getBoardComment());
-
-		
-		resultCnt=boardService.boardInsert(b);
-		total += resultCnt;
+		for(int i=0; i<listCnt; i++) {
+			if(boardVo.getBoardVoList().get(i).getBoardTitle() != null && boardVo.getBoardVoList().get(i).getBoardComment() != null ) {
+				resultCnt=boardService.boardInsert(boardVo.getBoardVoList().get(i));
+			}
+			total += resultCnt;
 		}
 		result.put("success", (total==listCnt)?"Y":"N");
 		String callbackMsg = commonUtil.getJsonCallBackString(" ",result);
