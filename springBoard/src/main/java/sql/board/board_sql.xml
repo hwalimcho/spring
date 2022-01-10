@@ -93,6 +93,9 @@
     	WHERE  BOARD_TYPE = #{boardType}
     	AND BOARD_NUM = #{boardNum}
     </delete>
+   
+    
+ 	
     
     
 </mapper>

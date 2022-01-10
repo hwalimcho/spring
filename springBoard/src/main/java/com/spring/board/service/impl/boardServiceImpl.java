@@ -29,6 +29,7 @@ public class boardServiceImpl implements boardService{
 		return boardDao.selectBoardList(pageVo);
 	}
 	
+
 	@Override
 	public int selectBoardCnt() throws Exception {
 		// TODO Auto-generated method stub

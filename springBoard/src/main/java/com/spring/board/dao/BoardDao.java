@@ -21,8 +21,7 @@ public interface BoardDao {
 
 	public int boardDelete(BoardVo boardVo) throws Exception;
 	
-
+	
 	
 
-	//public void boardDeltet(BoardVo boardVo) throws Exception;
 }

@@ -77,39 +77,41 @@ public class BoardController {
 	public String boardWrite(Locale locale, Model model) throws Exception{
 		
 		
+		
 		return "board/boardWrite";
 	}
 	
 	@RequestMapping(value = "/board/boardWriteAction.do", method = RequestMethod.POST)
 	@ResponseBody
 	public String boardWriteAction(Locale locale,BoardVo boardVo) throws Exception{
-		
 		HashMap<String, String> result = new HashMap<String, String>();
 		CommonUtil commonUtil = new CommonUtil();
-		
-		String titleList[] = boardVo.getBoardTitle().split(",");
-		String commentList[] = boardVo.getBoardComment().split(",");
-		
-		int listCnt = titleList.length;
-		int total = 0 ;
-		
-		for (int i=0; i<listCnt; i++) {
-			
-			BoardVo b = new BoardVo();
-			b.setBoardTitle(titleList[i]);
-			b.setBoardComment(commentList[i]);
-			
-			int resultCnt = boardService.boardInsert(b);
-			total += resultCnt;
-		} 
 
-		result.put("success", (total == listCnt)?"Y":"N");
+		int total = 0 ;
+		int listCnt = boardVo.getBoardVoList().size();
+		int resultCnt = 0;
+		//System.out.printf("listCnt : ", boardVo.getBoardVoList().size());
+
+		for(int i=0; i<listCnt; i++ ) {
+
+		BoardVo b = new BoardVo();
+		b.setBoardTitle(boardVo.getBoardVoList().get(i).getBoardTitle());
+		b.setBoardComment(boardVo.getBoardVoList().get(i).getBoardComment());
+
+		
+		resultCnt=boardService.boardInsert(b);
+		total += resultCnt;
+		}
+		result.put("success", (total==listCnt)?"Y":"N");
 		String callbackMsg = commonUtil.getJsonCallBackString(" ",result);
 		
 		System.out.println("callbackMsg::"+callbackMsg);
 		
 		return callbackMsg;
 		
+		//String titleList[] = boardVo.getBoardTitle().split(",");
+		//String commentList[] = boardVo.getBoardComment().split(",");
+
 	}
 	
 	

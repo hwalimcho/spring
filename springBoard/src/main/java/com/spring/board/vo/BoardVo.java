@@ -1,5 +1,7 @@
 package com.spring.board.vo;
 
+import java.util.List;
+
 public class BoardVo {
 	
 	private String 	boardType;
@@ -9,6 +11,15 @@ public class BoardVo {
 	private String 	creator;
 	private String	modifier;
 	private int totalCnt;
+	
+	private List<BoardVo> boardVoList;
+	
+	public List<BoardVo> getBoardVoList(){
+		return boardVoList;
+	}
+	public void setBoardVoList(List<BoardVo> boardVoList) {
+		this.boardVoList = boardVoList;
+	}
 	
 	
 	public int getTotalCnt() {
@@ -53,6 +64,17 @@ public class BoardVo {
 	public void setModifier(String modifier) {
 		this.modifier = modifier;
 	}
-	
-	
+	/*
+	public List<BoardVo> getBoardVoTitleList(){
+		return boardVoTitleList;
+	}
+	public void setBoardVoTitleList(List<BoardVo> boardVoTitleList) {
+		this.boardVoTitleList = boardVoTitleList;
+	}
+	public List<BoardVo> getBoardVoCommentList(){
+		return boardVoCommentList;
+	}
+	public void setBoardVoCommentList(List<BoardVo> boardVoCommentList) {
+		this.boardVoCommentList = boardVoCommentList;
+	}*/
 }
