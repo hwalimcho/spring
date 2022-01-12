@@ -11,6 +11,8 @@ public class BoardVo {
 	private String 	creator;
 	private String	modifier;
 	private int totalCnt;
+	private String codeID;
+	private String codeName;
 	
 	private List<BoardVo> boardVoList;
 	
@@ -64,6 +66,19 @@ public class BoardVo {
 	public void setModifier(String modifier) {
 		this.modifier = modifier;
 	}
+	public String getCodeID() {
+		return codeID;
+	}
+	public void setCodeID(String codeID) {
+		this.codeID = codeID;
+	}
+	public String getCodeName() {
+		return codeName;
+	}
+	public void setCodeName(String codeName) {
+		this.codeName = codeName;
+	}
+	
 	
 
 }

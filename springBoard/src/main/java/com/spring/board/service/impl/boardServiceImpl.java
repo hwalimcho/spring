@@ -26,7 +26,6 @@ public class boardServiceImpl implements boardService{
 	@Override
 	public List<BoardVo> SelectBoardList(PageVo pageVo) throws Exception {
 		// TODO Auto-generated method stub
-		
 		return boardDao.selectBoardList(pageVo);
 	}
 	
@@ -44,6 +43,9 @@ public class boardServiceImpl implements boardService{
 		
 		boardVo.setBoardType(boardType);
 		boardVo.setBoardNum(boardNum);
+		
+		
+		
 		//dao에서 형식상 인자 하나만 받을 수 있어서 하나로 만듦 
 		return boardDao.selectBoard(boardVo);
 	}
@@ -69,10 +71,11 @@ public class boardServiceImpl implements boardService{
 	@Override
 	public List<CodeVo> selectCodeList() throws Exception {
 		// TODO Auto-generated method stub
+		 
+		
 		
 		return boardDao.selectCodeList();
 	}
-	
 	
 	
 }

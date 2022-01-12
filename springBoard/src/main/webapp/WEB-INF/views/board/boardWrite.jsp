@@ -7,7 +7,6 @@
 <html>
 <head>
 
-
 <meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
 <title>boardWrite</title>
 </head>
@@ -50,6 +49,7 @@
 			    	alert("실패");
 			    }
 			});
+			//console.log("param: ", param);
 		});
 
 			 //행 개수			>> 굳이 이럴 필요 없었다 처음 테이블에 체크박스 없애면 됨;;
@@ -139,7 +139,7 @@
 						Type
 						</td>
 						<td>
-						<select name="codeType">
+						<select name="boardType">
 							<c:forEach items="${codeList}" var="list">
 							<option value="${list.codeID}">${list.codeName}</option>
 							</c:forEach>

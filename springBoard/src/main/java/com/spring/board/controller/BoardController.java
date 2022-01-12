@@ -37,9 +37,11 @@ public class BoardController {
 	
 	@RequestMapping(value = "/board/boardList.do", method = RequestMethod.GET)
 	public String boardList(Locale locale, Model model,PageVo pageVo) throws Exception{
-														//BoardVo boardVo
-		List<BoardVo> boardList = new ArrayList<BoardVo>();
+		HashMap<String, String> result = new HashMap<String, String>();
+		CommonUtil commonUtil = new CommonUtil();												
 		
+		List<BoardVo> boardList = new ArrayList<BoardVo>();
+				
 		int page = 1;
 		int totalCnt = 0;
 		
@@ -53,7 +55,7 @@ public class BoardController {
 		model.addAttribute("boardList", boardList);
 		model.addAttribute("totalCnt", totalCnt);
 		model.addAttribute("pageNo", page);
-		
+
 		return "board/boardList";
 	}
 	
@@ -96,11 +98,16 @@ public class BoardController {
 		int listCnt = boardVo.getBoardVoList().size();
 		int resultCnt = 0;
 		//System.out.printf("listCnt : ", boardVo.getBoardVoList().size());
-
+		
+		System.out.println("tttttttttttt" + boardVo.getBoardType());
 		for(int i=0; i<listCnt; i++) {
 			if(boardVo.getBoardVoList().get(i).getBoardTitle() != null && boardVo.getBoardVoList().get(i).getBoardComment() != null ) {
+				boardVo.getBoardVoList().get(i).setBoardType( boardVo.getBoardType());
 				resultCnt=boardService.boardInsert(boardVo.getBoardVoList().get(i));
 			}
+		
+			
+			
 			total += resultCnt;
 		}
 		result.put("success", (total==listCnt)?"Y":"N");
@@ -182,10 +189,8 @@ public class BoardController {
 			return callbackMsg;
 			
 			//return "redirect:/board/boardList.do";
-		
-	}
-
-
+			
+			}	
 }
 
 	

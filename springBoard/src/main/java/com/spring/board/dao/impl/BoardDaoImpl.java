@@ -69,11 +69,7 @@ public class BoardDaoImpl implements BoardDao{
 		// TODO Auto-generated method stub
 		return sqlSession.selectList("board.codeList");
 	}
-	
-	
-	
-	
-	
+
 	
 	
 }

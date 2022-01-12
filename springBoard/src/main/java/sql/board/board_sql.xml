@@ -7,16 +7,52 @@
     	<result property="boardNum" 	column="BOARD_NUM"/>
     	<result property="boardTitle" 	column="BOARD_TITLE"/>
     	<result property="boardComment" column="BOARD_COMMENT"/>
+    	<result property="codeID" 		column="CODE_ID"/>
+    	<result property="codeName" 	column="CODE_NAME"/>
     </resultMap>
       
     <resultMap type="com.spring.board.vo.CodeVo" id="codeVo">
     	<result property="codeType" 	column="CODE_TYPE"/>
-    	<result property="codeID" 	column="CODE_ID"/>
+    	<result property="codeID" 		column="CODE_ID"/>
     	<result property="codeName" 	column="CODE_NAME"/>
     
     </resultMap>
+     
+
    
     <select id="boardList" parameterType="com.spring.board.vo.PageVo" resultMap="boardVo">
+            
+ 	   SELECT
+        B.BOARD_TYPE
+        ,C.CODE_NAME
+        ,B.BOARD_NUM
+        ,B.BOARD_TITLE
+        ,B.BOARD_COMMENT
+        ,TOTAL_CNT    
+      FROM ( 
+        SELECT
+         CODE_ID
+         ,CODE_NAME
+      FROM COM_CODE
+     
+      ) C
+      LEFT OUTER JOIN (
+        SELECT
+            BOARD_TYPE
+            ,BOARD_NUM
+            ,BOARD_TITLE
+            ,BOARD_COMMENT
+               ,ROW_NUMBER() OVER(ORDER BY BOARD_NUM DESC) AS NUMROW
+               ,COUNT(*) OVER() AS TOTAL_CNT
+         FROM
+            BOARD   
+      ) B 
+    
+      ON B.BOARD_TYPE = C.CODE_ID
+      WHERE NUMROW BETWEEN (#{pageNo}-1)*10 + 1 AND (#{pageNo})*10
+      
+ <!--
+        
         SELECT 
 		  BOARD_TYPE
 		  ,BOARD_NUM
@@ -36,6 +72,7 @@
 				BOARD	
 		)
 		WHERE NUMROW BETWEEN (#{pageNo}-1)*10 + 1 AND (#{pageNo})*10
+		     -->
     </select>
     
     <select id="boardTotal" parameterType="Integer" resultType="Integer">
@@ -70,10 +107,10 @@
         ,MODIFIED_TIME
         )
         VALUES
-        ('1'
+        (#{boardType} <!-- 원래 1이었음, 게시글 타입에 따라 바뀌니까 -->
         ,(SELECT NVL(MAX(BOARD_NUM), 0) + 1
 	    FROM BOARD
-	    WHERE BOARD_TYPE = '1')
+	    WHERE BOARD_TYPE = #{boardType})
         ,#{boardTitle}
         ,#{boardComment}
         ,'SYSTEM'
@@ -107,8 +144,6 @@
 		WHERE CODE_TYPE = 'menu'
         
     </select>
-    
- 	
-    
+ 
     
 </mapper>
