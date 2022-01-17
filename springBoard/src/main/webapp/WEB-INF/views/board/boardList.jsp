@@ -42,17 +42,18 @@
 			
 		});
 		
+		var checkList = new Array();
 
 		$j("#inquire").on("click", function(){
-			var $frm = $j('.boardList :input');
-			var param = $frm.serialize();
+			//var $frm = $j('.boardList :input');
+			//var param = $frm.serialize();
 			
-			if($j(".check:checked").length == 0) {
-            	alert("조회할 항목을 선택하세요.");
-            	return;
-            };
-        	console.log(param);
-      
+            $j(".check:checked").each(function() {
+            	checkList.push(this.value);
+            });
+
+        	console.log(checkList);
+        	
         	
 		});
 		
@@ -101,9 +102,18 @@
 		</td>
 		
 	</tr>
-	<tr>
-
-	</tr>
+	<form action="/board/boardList.do">
+		<tr>
+			<td>
+			
+				<input name="checkAll" id="checkAll"  type="checkbox">전체
+				<c:forEach items="${codeList}" var="list">
+					<input name="checkRow" class="check" type="checkbox" value="${list.codeID}">${list.codeName}
+				</c:forEach>
+				<input id="inquire" type="submit" value="조회">
+			</td>
+		</tr>
+	</form>
 </table>	
 </body>
 </html>

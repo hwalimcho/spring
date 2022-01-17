@@ -71,9 +71,6 @@ public class boardServiceImpl implements boardService{
 	@Override
 	public List<CodeVo> selectCodeList() throws Exception {
 		// TODO Auto-generated method stub
-		 
-		
-		
 		return boardDao.selectCodeList();
 	}
 	

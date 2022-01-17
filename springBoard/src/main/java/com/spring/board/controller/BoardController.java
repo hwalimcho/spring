@@ -2,6 +2,7 @@ package com.spring.board.controller;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
@@ -36,25 +37,79 @@ public class BoardController {
 	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
 	
 	@RequestMapping(value = "/board/boardList.do", method = RequestMethod.GET)
+	
 	public String boardList(Locale locale, Model model,PageVo pageVo) throws Exception{
-		HashMap<String, String> result = new HashMap<String, String>();
-		CommonUtil commonUtil = new CommonUtil();												
+		//HashMap<String, String> result = new HashMap<String, String>();
+		//CommonUtil commonUtil = new CommonUtil();												
 		
 		List<BoardVo> boardList = new ArrayList<BoardVo>();
-				
+		List<CodeVo> codeList = new ArrayList<CodeVo>();
+		
+		
 		int page = 1;
 		int totalCnt = 0;
 		
 		if(pageVo.getPageNo() == 0){
 			pageVo.setPageNo(page);
 		}
+		if(pageVo.getCheckRow() == null) {
+			//String callMsg ="<script>alert('조회할 항목을 선택해주세요');location.href='/board/boardList.do';</script>";
+			//System.out.println(callMsg);
+		}
+		else {
+			String[] checkList = pageVo.getCheckRow().split(",");
+			pageVo.setCheckList(checkList);
+			
+			
+		}
 		
 		boardList = boardService.SelectBoardList(pageVo);
+		codeList = boardService.selectCodeList();
 		totalCnt = boardService.selectBoardCnt();
 		
+		model.addAttribute("codeList", codeList);
 		model.addAttribute("boardList", boardList);
 		model.addAttribute("totalCnt", totalCnt);
 		model.addAttribute("pageNo", page);
+		
+		/*
+		System.out.println("result : "+pageVo.getCheckRow());
+		//if(pageVo.getCheckRow() == null) {
+			//String callMsg ="<script>alert('조회할 항목을 선택해주세요');location.href='/board/boardList.do';</script>";
+			//System.out.println(callMsg);
+		//}else {
+			String check = pageVo.getCheckRow().toString();
+			String[] checkList = check.split(",");
+			System.out.println("list : "+ check);
+
+			for(int i=0; i<checkList.length; i++) {
+			System.out.println("checklist : "+checkList[i]);
+			//}
+			
+		}
+		*/
+		
+		
+		
+		
+		//System.out.println("param : "+ pageVo.getCheckRow());
+		/*
+		String checkList[] = null;
+		
+		String check = result.get("checkParam").toString();
+		checkList = check.split(",");
+		
+		int results = checkList.length;
+		int num = 1;
+		
+		for(int i=0; i<results; i++) {
+			HashMap<String, Object> resend = new HashMap<String, Object>();
+
+			resend.put("check", checkList[i]);
+			
+			results[i] = boardService.selectCodeList(resend);			
+		}*/
+		//System.out.println("checkList : "+ checkList);
 
 		return "board/boardList";
 	}

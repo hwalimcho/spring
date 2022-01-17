@@ -21,37 +21,82 @@
 
    
     <select id="boardList" parameterType="com.spring.board.vo.PageVo" resultMap="boardVo">
-            
- 	   SELECT
-        B.BOARD_TYPE
-        ,C.CODE_NAME
-        ,B.BOARD_NUM
-        ,B.BOARD_TITLE
-        ,B.BOARD_COMMENT
-        ,TOTAL_CNT    
-      FROM ( 
-        SELECT
-         CODE_ID
-         ,CODE_NAME
-      FROM COM_CODE
-     
-      ) C
-      LEFT OUTER JOIN (
-        SELECT
-            BOARD_TYPE
-            ,BOARD_NUM
-            ,BOARD_TITLE
-            ,BOARD_COMMENT
-               ,ROW_NUMBER() OVER(ORDER BY BOARD_NUM DESC) AS NUMROW
-               ,COUNT(*) OVER() AS TOTAL_CNT
-         FROM
-            BOARD   
-      ) B 
     
-      ON B.BOARD_TYPE = C.CODE_ID
-      WHERE NUMROW BETWEEN (#{pageNo}-1)*10 + 1 AND (#{pageNo})*10
+	SELECT
+        BOARD_TYPE
+        ,CODE_NAME
+        ,BOARD_NUM
+        ,BOARD_TITLE
+        ,BOARD_COMMENT
+        ,TOTAL_CNT    
+	FROM COM_CODE 
+		LEFT OUTER JOIN (
+            SELECT
+                BOARD_TYPE
+                ,BOARD_NUM
+                ,BOARD_TITLE
+                ,BOARD_COMMENT
+                ,ROW_NUMBER() OVER(ORDER BY BOARD_NUM DESC) AS NUMROW
+                ,COUNT(*) OVER() AS TOTAL_CNT
+            FROM BOARD 
+            )
+			ON BOARD_TYPE = CODE_ID
+            AND
+			<choose>
+	            <when test="checkList != null">
+	            	BOARD_TYPE IN
+					<foreach collection="checkList" item="list" open="(" close=")" separator=",">
+						#{list}
+					</foreach>	
+	            </when>
+	            <otherwise>
+	           	 	BOARD_TYPE IN BOARD_TYPE
+	            </otherwise>
+            </choose>
+		   	WHERE CODE_TYPE = 'menu' 
+            AND NUMROW BETWEEN (#{pageNo}-1)*10 + 1 AND (#{pageNo})*10
+    
+    
+    
+ <!--  
+ 	   SELECT
+		CODE_NAME
+		,CODE_ID
+		,BOARD_NUM
+		,BOARD_TITLE
+		,BOARD_COMMENT
+		,TOTAL_CNT
+		FROM
+		(
+			SELECT
+				CODE_NAME
+				,CODE_ID
+				,BOARD_NUM
+				,BOARD_TITLE
+				,BOARD_COMMENT
+				,ROW_NUMBER() OVER(ORDER BY BOARD_NUM DESC) AS NUMROW
+				,COUNT(*) OVER() AS TOTAL_CNT
+			FROM
+				BOARD
+				,COM_CODE
+			WHERE CODE_ID = BOARD_TYPE
+			AND CODE_TYPE = 'menu'
+			
+			)
+		WHERE
+			<if test="checkList != null">
+		 	CODE_ID IN
+			<foreach collection="checkList" item="list" open="(" close=")" separator=",">
+				#{list}
+			</foreach>	
+		    </if> 
+		AND NUMROW BETWEEN (#{pageNo}-1)*10 + 1 AND (#{pageNo})*10
+			  
+		
+     
+	
       
- <!--
+ 
         
         SELECT 
 		  BOARD_TYPE
