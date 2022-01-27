@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=EUC-KR"
-    pageEncoding="EUC-KR"%>
-<%@include file="/WEB-INF/views/common/common.jsp"%>  
+	pageEncoding="EUC-KR"%>
+<%@include file="/WEB-INF/views/common/common.jsp"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -35,50 +35,35 @@
 			});
 		});
 	});
-	
-
 </script>
 <body>
 	<form class="boardUpdate">
 		<table align="center">
 			<tr>
-				<td align="right">
-				<input id="update" type="button" value="수정">
-				</td>
+				<td align="right"><input id="update" type="button" value="수정"></td>
 			</tr>
 			<tr>
 				<td>
-					<table border ="1"> 
+					<table border="1">
 						<tr>
-							<td width="120" align="center">
-							Title
-							</td>
-							<td width="400">
-							<input name="boardTitle" type="text" size="50" value="${board.boardTitle}" > 
-							</td>
+							<td width="120" align="center">Title</td>
+							<td width="400"><input name="boardTitle" type="text" size="50" value="${board.boardTitle}"></td>
 						</tr>
 						<tr>
-							<td height="300" align="center">
-							Comment
-							</td>
+							<td height="300" align="center">Comment</td>
 							<td valign="top">
-							<textarea name="boardComment"  rows="20" cols="55">${board.boardComment}</textarea>
+							     <textarea name="boardComment" rows="20" cols="55">${board.boardComment}</textarea>
 							</td>
 						</tr>
 						<tr>
-							<td align="center">
-							Writer
-							</td>
-							<td>
-							</td>
+							<td align="center">Writer</td>
+							<td></td>
 						</tr>
 					</table>
 				</td>
 			</tr>
 			<tr>
-				<td align="right">
-					<a href="/board/boardList.do">List</a>
-				</td>
+				<td align="right"><a href="/board/boardList.do">List</a></td>
 			</tr>
 		</table>
 		<input name="boardType" type="hidden" value="${board.boardType}">

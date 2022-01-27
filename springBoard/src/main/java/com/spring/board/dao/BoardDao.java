@@ -12,6 +12,8 @@ public interface BoardDao {
 
 	public List<BoardVo> selectBoardList(PageVo pageVo) throws Exception;
 
+	//public List<BoardVo> getBoardList(PageVo pageVo) throws Exception;
+	
 	public BoardVo selectBoard(BoardVo boardVo) throws Exception;
 
 	public int selectBoardCnt() throws Exception;
@@ -24,5 +26,5 @@ public interface BoardDao {
 	
 	public List<CodeVo> selectCodeList() throws Exception;
 	
-	//public List<BoardVo> selectJoinList(PageVo pageVo) throws Exception;
+	
 }
